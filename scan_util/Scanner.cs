@@ -11,6 +11,7 @@ namespace scan_util
 {
     public class Scanner
     {
+        const int MAX_BUFFER_SIZE = 2048;
         static readonly Encoding enc8 = Encoding.UTF8;
 
         private int processed;
@@ -68,9 +69,17 @@ namespace scan_util
                         Interlocked.Increment(ref processed);
                         string extension = Path.GetExtension(filePath);
 
-                        byte[] convert = new byte[file.Length];
-                        file.Read(convert, 0, convert.Length);
-                        string textFromFile = enc8.GetString(convert);
+                        byte[] convert = new byte[MAX_BUFFER_SIZE];
+                        string textFromFile = null;
+                        if (convert.Length <= MAX_BUFFER_SIZE)
+                        {
+                            file.Read(convert, 0, convert.Length);
+                            textFromFile = enc8.GetString(convert);
+                        }
+                        else
+                        {
+                            textFromFile = ReadFromBuffer(file);
+                        }
 
                         if ((extension == ".js" || extension == ".JS") &&
                             (textFromFile.Contains("<script>evil_script()</script>") ||
@@ -94,6 +103,21 @@ namespace scan_util
                     Interlocked.Increment(ref errors);
                 }
             }
+        }
+        private string ReadFromBuffer(FileStream fStream)
+        {
+            string output = String.Empty;
+            Decoder decoder8 = enc8.GetDecoder();
+
+            while (fStream.Position < fStream.Length)
+            {
+                int nBytes = fStream.Read(bytes, 0, bytes.Length);
+                int nChars = decoder8.GetCharCount(bytes, 0, nBytes);
+                char[] chars = new char[nChars];
+                nChars = decoder8.GetChars(bytes, 0, nBytes, chars, 0);
+                output += new String(chars, 0, nChars);
+            }
+        return output;
         }
         public void PrintReport()
         {
