@@ -13,7 +13,6 @@ namespace scan_util
         static int Main(string[] args)
         {
             string path;
-            int numOfThreads = 16;
             Scanner scanner = new Scanner();
 
             if (args.Length == 0)
@@ -26,18 +25,15 @@ namespace scan_util
                 return 1;
             }
 
-            if (args.Length >= 2)
+            if (args.Length >= 2 && int.TryParse(args[1], out int numOfThreads) && numOfThreads > 0)
             {
-                int.TryParse(args[1], out numOfThreads);
-                if (numOfThreads <= 0)
-                    numOfThreads = 16;
+                scanner.SetNumberOfThreads(numOfThreads);
             }
 
             try
             {
                 var sortedBySize = Directory.GetFiles(path, "*.*", SearchOption.AllDirectories).OrderBy(f => new FileInfo(f).Length);
                 scanner.sortedFiles = sortedBySize.ToList();
-                scanner.SetNumberOfThreads(numOfThreads);
                 scanner.InitThreads();
                 scanner.PrintReport();
             }

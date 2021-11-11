@@ -6,3 +6,11 @@ C:\Users\Public\Documents\scan_util\obj\Release\scan_util.csproj.SuggestedBindin
 C:\Users\Public\Documents\scan_util\obj\Release\scan_util.csproj.CoreCompileInputs.cache
 C:\Users\Public\Documents\scan_util\obj\Release\scan_util.exe
 C:\Users\Public\Documents\scan_util\obj\Release\scan_util.pdb
+C:\Users\Наталья\Desktop\SafeBoardLabCSharp\scan_util\bin\Release\scan_util.exe.config
+C:\Users\Наталья\Desktop\SafeBoardLabCSharp\scan_util\bin\Release\scan_util.exe
+C:\Users\Наталья\Desktop\SafeBoardLabCSharp\scan_util\bin\Release\scan_util.pdb
+C:\Users\Наталья\Desktop\SafeBoardLabCSharp\scan_util\obj\Release\scan_util.csproj.AssemblyReference.cache
+C:\Users\Наталья\Desktop\SafeBoardLabCSharp\scan_util\obj\Release\scan_util.csproj.SuggestedBindingRedirects.cache
+C:\Users\Наталья\Desktop\SafeBoardLabCSharp\scan_util\obj\Release\scan_util.csproj.CoreCompileInputs.cache
+C:\Users\Наталья\Desktop\SafeBoardLabCSharp\scan_util\obj\Release\scan_util.exe
+C:\Users\Наталья\Desktop\SafeBoardLabCSharp\scan_util\obj\Release\scan_util.pdb

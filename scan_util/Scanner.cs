@@ -19,9 +19,9 @@ namespace scan_util
         private int rm;
         private int rundll;
         private int errors;
-        private int MAX_THREADS;
+        private int MAX_THREADS = 16;
         private List<Thread> searchThreadPull;
-        public Stopwatch execTime;
+        private Stopwatch execTime;
 
         public List<string> sortedFiles;
         public Scanner()
@@ -71,14 +71,14 @@ namespace scan_util
 
                         byte[] convert = new byte[MAX_BUFFER_SIZE];
                         string textFromFile = null;
-                        if (convert.Length <= MAX_BUFFER_SIZE)
+                        if (file.Length <= MAX_BUFFER_SIZE)
                         {
                             file.Read(convert, 0, convert.Length);
                             textFromFile = enc8.GetString(convert);
                         }
                         else
                         {
-                            textFromFile = ReadFromBuffer(file);
+                            textFromFile = ReadFromBuffer(file, convert);
                         }
 
                         if ((extension == ".js" || extension == ".JS") &&
@@ -104,20 +104,20 @@ namespace scan_util
                 }
             }
         }
-        private string ReadFromBuffer(FileStream fStream)
+        private string ReadFromBuffer(FileStream fStream, byte[] convert)
         {
             string output = String.Empty;
             Decoder decoder8 = enc8.GetDecoder();
 
             while (fStream.Position < fStream.Length)
             {
-                int nBytes = fStream.Read(bytes, 0, bytes.Length);
-                int nChars = decoder8.GetCharCount(bytes, 0, nBytes);
+                int nBytes = fStream.Read(convert, 0, convert.Length);
+                int nChars = decoder8.GetCharCount(convert, 0, nBytes);
                 char[] chars = new char[nChars];
-                nChars = decoder8.GetChars(bytes, 0, nBytes, chars, 0);
+                nChars = decoder8.GetChars(convert, 0, nBytes, chars, 0);
                 output += new String(chars, 0, nChars);
             }
-        return output;
+            return output;
         }
         public void PrintReport()
         {
